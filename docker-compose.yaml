@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  hello-world:
+    image: strm/helloworld-http:latest
+    container_name: hello-world-remote-service
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+
+  rust-tutorial:
+    image: rust-tutorial:latest
+    container_name: rust-tutorial-service
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    depends_on:
+      - hello-world
+    environment:
+      HELLO_WORLD_URL: "http://hello-world:80"
